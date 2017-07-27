@@ -53,8 +53,6 @@ module.exports = function universalLoader(req, res) {
     const headMarkup = context.head.map(h=>(
       renderToStaticMarkup(h)
     )).join('')
-    console.log('head', headMarkup)
-    console.log('data', context.data, JSON.stringify(context.data))
 
     if (context.url) {
       // Somewhere a `<Redirect>` was rendered
