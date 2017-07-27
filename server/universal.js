@@ -63,7 +63,9 @@ module.exports = function universalLoader(req, res) {
       // we're good, send the response
       const RenderedApp = htmlData.replace('{{SSR}}', newMarkup)
         .replace('{{head}}', headMarkup)
-        .replace('{{DATA}}', JSON.stringify(context.data))
+        .replace('{data:{}}', JSON.stringify(context.data))
+      if (context.code)
+        res.status(context.code)
       res.send(RenderedApp)
     }
   })

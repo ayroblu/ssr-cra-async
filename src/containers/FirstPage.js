@@ -10,28 +10,23 @@ class FirstPage extends Component {
   async componentWillMount(){
     this.state = {text: 'loading'}
     
+    this._handleData('firstPage')
+  }
+  async _handleData(key){
     const {staticContext} = this.props
-    let loading = false
-    if (!staticContext || !staticContext.data.firstPage) {
-      if (!staticContext && window.DATA.firstPage) {
-        loading = window.DATA.firstPage
-      } else {
-        loading = this._getData()
-        console.log('inner loading', loading)
-      }
-      
-      if (staticContext) {
-        staticContext.data.firstPage = loading
-        return
-      }
-    } else if (staticContext){
-      const {text} = staticContext.data.firstPage
+    if (staticContext && staticContext.data[key]){
+      const {text} = staticContext.data[key]
       this.setState({text})
-      return
+    } else if (staticContext){
+      staticContext.data[key] = this._getData()
+    } else if (!staticContext && window.DATA[key]){
+      const {text} = window.DATA[key]
+      this.setState({text})
+      window.DATA[key] = null
+    } else if (!staticContext) {
+      const {text} = await this._getData()
+      this.setState({text})
     }
-    console.log('loading', loading)
-    const {text} = await loading
-    this.setState({text})
   }
   async _getData(){
     const {text} = await new Promise(y=>setTimeout(()=>{
