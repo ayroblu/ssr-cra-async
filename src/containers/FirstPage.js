@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-
-import * as userActions from '../actions/user'
 import { Link } from 'react-router-dom'
+
+import * as api from '../api'
+import * as userActions from '../actions/user'
 import './FirstPage.css'
 
 class FirstPage extends Component {
@@ -17,11 +18,14 @@ class FirstPage extends Component {
     if (staticContext && staticContext.data[key]){
       const {text} = staticContext.data[key]
       this.setState({text})
+      staticContext.head.push(
+        <meta name="description" content={"Some description: "+text}/>
+      )
     } else if (staticContext){
       staticContext.data[key] = this._getData()
     } else if (!staticContext && window.DATA[key]){
       const {text} = window.DATA[key]
-      this.setState({text})
+      this.state = {...this.state, text}
       window.DATA[key] = null
     } else if (!staticContext) {
       const {text} = await this._getData()
@@ -29,10 +33,12 @@ class FirstPage extends Component {
     }
   }
   async _getData(){
-    const {text} = await new Promise(y=>setTimeout(()=>{
-      y({text: 'hi'}) // This is probably where you'd make an api call
-    },1000))
-    return {text}
+    const {staticContext} = this.props
+    if (staticContext) {
+      return staticContext.api.getMain()
+    } else {
+      return api.getMain()
+    }
   }
   render() {
     const b64 = this.props.staticContext ? 'wait for it' : window.btoa('wait for it')

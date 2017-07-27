@@ -7,7 +7,7 @@ router.use(function(req, res, next) {
 })
 
 router.get('/', function(req, res, next) {
-  res.json({})
+  res.json({text: 'Got Something'})
 })
 
 module.exports = router

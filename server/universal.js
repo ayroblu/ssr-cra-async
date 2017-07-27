@@ -3,9 +3,10 @@ const fs = require('fs')
 
 const React = require('react')
 const {Provider} = require('react-redux')
-const {renderToString} = require('react-dom/server')
+const {renderToString, renderToStaticMarkup} = require('react-dom/server')
 const {StaticRouter} = require('react-router-dom')
 
+const api = require('./api')
 const {default: configureStore} = require('../src/store')
 const {default: App} = require('../src/containers/App')
 
@@ -17,9 +18,9 @@ module.exports = function universalLoader(req, res) {
       console.error('read err', err)
       return res.status(404).end()
     }
-    const context = {data: {}, head: [], req}
+    const context = {data: {}, head: [], req, api}
     const store = configureStore()
-    const markup = renderToString(
+    renderToString(
       <Provider store={store}>
         <StaticRouter
           location={req.url}
@@ -36,9 +37,10 @@ module.exports = function universalLoader(req, res) {
       resolved.forEach((r,i)=>context.data[keys[i]]=r)
     } catch (err) {
      // Render a better page than that? or just send the original markup, let the frontend handle it. Many options here
+      console.error('err', err)
       return res.status(400).json({message: "Uhhh, some thing didn't work"})
     }
-    const newMarkup = renderToString(
+    const markup = renderToString(
       <Provider store={store}>
         <StaticRouter
           location={req.url}
@@ -48,11 +50,9 @@ module.exports = function universalLoader(req, res) {
         </StaticRouter>
       </Provider>
     )
-    const headMarkup = renderToString(
-      <div>
-        {context.head}
-      </div>
-    ).replace(/^<div.*?>/, '').replace(/<\/div>$/, '')
+    const headMarkup = context.head.map(h=>(
+      renderToStaticMarkup(h)
+    )).join('')
     console.log('head', headMarkup)
     console.log('data', context.data, JSON.stringify(context.data))
 
@@ -61,7 +61,7 @@ module.exports = function universalLoader(req, res) {
       redirect(301, context.url)
     } else {
       // we're good, send the response
-      const RenderedApp = htmlData.replace('{{SSR}}', newMarkup)
+      const RenderedApp = htmlData.replace('{{SSR}}', markup)
         .replace('{{head}}', headMarkup)
         .replace('{data:{}}', JSON.stringify(context.data))
       if (context.code)
