@@ -23,10 +23,13 @@
     {{head}}
   </head>
   <body>
-    <noscript>		
-      Please enable javascript for this page		
+    <noscript>
+      Please enable javascript for this page
     </noscript>
     <div id="root">{{SSR}}</div>
+    <script>
+      window.DATA = {{DATA}}
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

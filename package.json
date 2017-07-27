@@ -5,6 +5,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.5.1",
+    "nodemon": "^1.11.0",
     "react-scripts": "1.0.6"
   },
   "dependencies": {
@@ -14,14 +15,14 @@
     "ignore-styles": "^5.0.1",
     "morgan": "^1.8.1",
     "react": "next",
-    "react-dom": "^15.5.4",
+    "react-dom": "next",
     "react-redux": "^5.0.4",
-    "react-router-dom": "^4.1.1",
+    "react-router-dom": "next",
     "redux": "^3.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:server": "NODE_ENV=development node server/index.js",
+    "start:server": "NODE_ENV=development nodemon server/index.js",
     "now-start": "NODE_ENV=production node server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
