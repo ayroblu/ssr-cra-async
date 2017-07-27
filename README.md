@@ -1,7 +1,9 @@
-Server Side Rendering with Create React App
-===========================================
+Async Server Side Rendering with Create React App
+=================================================
 
-This is the v2 version of my react app, checkout my article here: https://medium.com/@benlu/ssr-with-create-react-app-v2-1b8b520681d9
+This was originally the v2 version of my ssr react app, checkout the original here: https://github.com/ayroblu/ssr-create-react-app-v2
+
+This was written in conjunction with an article: TBD
 
 Install
 -------
