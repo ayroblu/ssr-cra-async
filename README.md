@@ -8,9 +8,9 @@ This was written in conjunction with an article: TBD
 Install
 -------
 ```bash
-npm install
-npm run build
-npm run start:server
+yarn
+yarn build
+yarn start:server
 ```
 
 ### Development
