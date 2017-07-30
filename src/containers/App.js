@@ -9,8 +9,6 @@ export default class App extends Component {
     return (
       <div>
         <h1>Server Side Rendering with Create React App - data loading</h1>
-        <p>This code is on github: <a href='https://github.com/ayroblu/ssr-cra-async'>https://github.com/ayroblu/ssr-cra-async</a></p>
-        <p>Medium article: <a href='https://gist.github.com/ayroblu/a6c4fcc1f397dcafe6a0ef9d46b66196'>https://gist.github.com/ayroblu/a6c4fcc1f397dcafe6a0ef9d46b66196</a></p>
         <Switch>
           <Route exact path="/" component={FirstPage}/>
           <Route path="/second" component={SecondPage}/>
