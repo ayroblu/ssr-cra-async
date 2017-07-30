@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "body-parser": "^1.17.1",
+    "buttercms": "^1.0.17",
     "compression": "^1.6.2",
     "express": "^4.15.2",
     "ignore-styles": "^5.0.1",

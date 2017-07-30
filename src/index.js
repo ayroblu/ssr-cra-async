@@ -11,6 +11,9 @@ import registerServiceWorker from './registerServiceWorker'
 // Let the reducers handle initial state
 const initialState = {}
 const store = configureStore(initialState)
+if (window.DATA && typeof window.DATA === 'string') {
+  window.DATA=JSON.parse(window.atob(window.DATA))
+}
 
 ReactDOM.render(
   <Provider store={store}>
